@@ -1,0 +1,13 @@
+{
+  "header": {
+    "projects": "Projects",
+    "about": "About",
+    "contact": "Contact",
+    "blog": "Blog",
+    "portfolio": "Portfolio",
+    "reviews": "Reviews"
+  },
+  "products": {
+    "cart": "Add to Cart"
+  }
+}
