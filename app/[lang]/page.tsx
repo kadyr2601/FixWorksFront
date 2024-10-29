@@ -9,6 +9,8 @@ import Services from "@/components/Services";
 import Partners from "@/components/partners";
 import SingleBanner from "@/components/layout/SingleBanner";
 import {PageBanner} from "@/components/DTOs";
+import MainBanner from "@/components/MainBanner";
+import React from "react";
 
 
 async function getBanner(page: string) {
@@ -16,7 +18,9 @@ async function getBanner(page: string) {
     return res.json();
 }
 
-interface PageProps { params: { lang: string } }
+type Lang = 'en' | 'ru';
+
+interface PageProps { params: { lang: Lang } }
 
 export default async function Page({ params: { lang } }: PageProps) {
 
@@ -28,9 +32,10 @@ export default async function Page({ params: { lang } }: PageProps) {
 
     return (
         <>
+            <MainBanner pathname={"home"}/>
             <TripleCardsBanner lang={lang} page={'home'}/>
-            <YouTubeEmbed videoId="0xX9YkCjlLo"/>
-            <Main4/>
+            <YouTubeEmbed videoId="0xX9YkCjlLo" lang={lang}/>
+            <Main4 lang={lang}/>
             <AboutUs/>
             <Counter/>
             {imageBanners.map(b => <SingleBanner key={b.id} props={b} lang={lang}/>)}

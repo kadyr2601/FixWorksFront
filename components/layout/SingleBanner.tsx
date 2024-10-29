@@ -1,7 +1,7 @@
 'use client';
 import React, {useEffect, useState} from 'react';
 import FeedbackButton from "@/components/layout/FeedbackButton";
-import Image from "next/image";
+import Image, {StaticImageData} from "next/image";
 import {PageBanner} from "@/components/DTOs";
 
 
@@ -41,6 +41,26 @@ const SingleBanner = ({props, lang}:{props: PageBanner, lang: string}) => {
                 return 'image';
         }
         return 'video';
+    }
+
+    if (props.file && typeof props.file === 'object' && 'src' in props.file) {
+        return (
+            <div className="container">
+                <div className="single-banner">
+                    <div className="info">
+                        <h2>{props[`title_${lang}`]}</h2>
+                        {props.button && <FeedbackButton />}
+                    </div>
+                    <div className="image" style={{ height: isMobile ? `${props.mobile_height}px` : `${props.desktop_height}px` }}>
+                        <Image
+                            src={props.file as StaticImageData}
+                            alt="Single-Banner"
+                            fill={true}
+                        />
+                    </div>
+                </div>
+            </div>
+        );
     }
 
 

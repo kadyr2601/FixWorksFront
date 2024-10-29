@@ -4,6 +4,7 @@ import Image from "next/image";
 import projectSection from "@/public/projectSection.svg"
 import SingleBanner from "@/components/layout/SingleBanner";
 import Services from "@/components/Services";
+import MainBanner from "@/components/MainBanner";
 
 async function getProjects() {
     const res = await fetch(`${process.env.API_URL}/api/project-list`, { cache: 'no-store' });
@@ -29,6 +30,7 @@ export default async function Page({ params: { lang } }: PageProps) {
 
     return (
         <div className={'projects-section'}>
+            <MainBanner pathname={"projects"}/>
             <h1 className={'container'}>OUR PROJECTS</h1>
             {projects.results.map((project, index) => (
                 <div className={`column container ${index % 2 !== 0 ? 'reverse' : ''}`} key={index}>

@@ -1,12 +1,5 @@
 {
-  "header": {
-    "projects": "Проекты",
-    "contact": "Контакты",
-    "blog": "Блог",
-    "portfolio": "Портфолио",
-    "reviews": "Отзывы"
-  },
-  "products": {
-    "cart": "Add to Cart RU"
+  "home": {
+    "section1": "С нами возможна"
   }
 }

@@ -5,6 +5,7 @@ import Image from "next/image";
 import SingleBanner from "@/components/layout/SingleBanner";
 import Services from "@/components/Services";
 import Pagination from "@/components/Pagination";
+import MainBanner from "@/components/MainBanner";
 
 
 async function getPortfolio() {
@@ -30,6 +31,7 @@ export default async function Page({ params: { lang } }: PageProps) {
     }
     return (
         <div className={'portfolio-section'}>
+            <MainBanner pathname={"portfolio"}/>
             <h1 className={'container'}>Portfolio</h1>
             <div className="result">
                 <div className="grid container">

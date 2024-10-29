@@ -6,6 +6,7 @@ import SingleBanner from "@/components/layout/SingleBanner";
 import Services from "@/components/Services";
 import Pagination from "@/components/Pagination";
 import Link from "next/link";
+import MainBanner from "@/components/MainBanner";
 
 
 async function getBlogList() {
@@ -30,6 +31,7 @@ export default async function Page({ params: { lang } }: PageProps) {
 
     return (
         <div className={'blog-section'}>
+            <MainBanner pathname={"blog"}/>
             <h1 className={'container'}>Blog</h1>
             <div className="result">
                 <div className="grid container">

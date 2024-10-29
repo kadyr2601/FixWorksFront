@@ -1,13 +1,10 @@
 {
-  "header": {
-    "projects": "Projects",
-    "about": "About",
-    "contact": "Contact",
-    "blog": "Blog",
-    "portfolio": "Portfolio",
-    "reviews": "Reviews"
-  },
-  "products": {
-    "cart": "Add to Cart"
+  "home": {
+    "section1": "With us you can",
+
+    "main4-1": "Always by your side",
+    "main4-2": "We will help you on the same day",
+    "main4-3": "We are attentive",
+    "main4-4": "To customer wishes"
   }
 }

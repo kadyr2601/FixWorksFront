@@ -5,14 +5,12 @@ import logo from '@/public/logo-color.svg';
 import Link from 'next/link';
 import LanguageButton from "@/components/layout/LanguageButton";
 import Menu from "@/components/layout/Menu";
-import {usePathname} from "next/navigation";
-import MainBanner from "@/components/MainBanner";
+import FeedbackModal from "@/components/Feedback";
 
 
+type Lang = 'en' | 'ru';
 
-const Header = ({lang}:{lang: string}) => {
-
-    const pathname = usePathname();
+const Header = ({lang}:{lang: Lang}) => {
 
     const [menuActive, setMenuActive] = useState(false);
 
@@ -46,8 +44,40 @@ const Header = ({lang}:{lang: string}) => {
         return () => window.removeEventListener('resize', checkScreenWidth);
     }, []);
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
+    const feedbackBtnName = lang === 'en' ? 'get in touch' : 'связаться';
+
+
+    const links: Record<Lang, { projects: string; portfolio: string; reviews: string; blog: string; contact: string }> = {
+        en: {
+            projects: 'Projects',
+            portfolio: 'Portfolio',
+            reviews: 'Reviews',
+            blog: 'Blog',
+            contact: 'Contact',
+        },
+        ru: {
+            projects: 'Проекты',
+            portfolio: 'Портфолио',
+            reviews: 'Отзывы',
+            blog: 'Блог',
+            contact: 'Контакты',
+        },
+    };
+
+
     return (
         <div className={'header-cont'}>
+            <FeedbackModal isOpen={isModalOpen} onClose={closeModal} />
 
             <div className="header-top">
                 <div className="block">
@@ -57,23 +87,20 @@ const Header = ({lang}:{lang: string}) => {
                     <LanguageButton lang={lang}/>
                 </div>
                 <div className="block">
-                    <div className={`feedback-btn`} style={{display: isMobile ? "none": ''}}>get in touch</div>
+                    <div className={`feedback-btn`} onClick={openModal} style={{display: isMobile ? "none": ''}}>{feedbackBtnName}</div>
                     <Menu active={menuActive} toggleMenu={toggleMenu} />
                 </div>
             </div>
-
-            <MainBanner pathname={pathname} lang={lang}/>
-
 
             {menuActive &&
                 <div className="header-menu-open">
                     <div className="up container">
                         <div className="links">
-                        <Link href={`/${lang}/projects`} onClick={toggleMenu}>Projects</Link>
-                        <Link href={`/${lang}/portfolio`} onClick={toggleMenu}>Portfolio</Link>
-                        <Link href={`/${lang}/reviews`} onClick={toggleMenu}>Reviews</Link>
-                        <Link href={`/${lang}/blog`} onClick={toggleMenu}>Blog</Link>
-                        <Link href={`/${lang}/contact`} onClick={toggleMenu}>Contact</Link>
+                        <Link href={`/${lang}/projects`} onClick={toggleMenu}>{links[`${lang}`].projects}</Link>
+                        <Link href={`/${lang}/portfolio`} onClick={toggleMenu}>{links[`${lang}`].portfolio}</Link>
+                        <Link href={`/${lang}/reviews`} onClick={toggleMenu}>{links[`${lang}`].reviews}</Link>
+                        <Link href={`/${lang}/blog`} onClick={toggleMenu}>{links[`${lang}`].blog}</Link>
+                        <Link href={`/${lang}/contact`} onClick={toggleMenu}>{links[`${lang}`].contact}</Link>
                     </div>
                     <div className="info">
 
@@ -97,11 +124,6 @@ const Header = ({lang}:{lang: string}) => {
                         </div>
                     </div>
                 </div>
-                {/*<div className="down container">*/}
-                {/*    <Card head={"Industrial restoration"} image={img2} height={200}/>*/}
-                {/*    <Card head={"Custom-tailored restoration"} image={img3} height={200}/>*/}
-                {/*    <Card head={"Museum restoration"} image={img4} height={200}/>*/}
-                {/*</div>*/}
             </div>
             }
         </div>

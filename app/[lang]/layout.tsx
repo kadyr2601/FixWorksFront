@@ -9,7 +9,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 
 export async function generateStaticParams() {
-    return [{ lang: 'en-US' }, { lang: 'ru' }];
+    return [{ lang: 'en' }, { lang: 'ru' }];
 }
 
 export const metadata: Metadata = {
@@ -17,9 +17,11 @@ export const metadata: Metadata = {
     description: "Industrial, сustom-tailored and museum restoration. We are an experienced restoration company, our customers are hotels, offices, etc.",
 };
 
+type Lang = 'en' | 'ru';
+
 export default function RootLayout({children, params}: {
     children: React.ReactNode;
-    params: { lang: string };
+    params: { lang: Lang };
 }) {
     return (
         <html lang={params.lang}>
@@ -32,7 +34,7 @@ export default function RootLayout({children, params}: {
         <body>
         <Header lang={params.lang}/>
         {children}
-        <Footer/>
+        <Footer lang={params.lang}/>
         </body>
         </html>
     );

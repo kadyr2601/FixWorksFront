@@ -3,18 +3,26 @@ import Link from "next/link";
 import ScrollToTopButton from "@/components/layout/ScrollToTopButton";
 import RotatingPhrases from "@/components/layout/RotatingPhrases";
 import { HiOutlineChatBubbleLeftEllipsis } from "react-icons/hi2";
+import {RestorationList} from "@/components/DTOs";
 
+async function GetRestorationList() {
+    const res = await fetch(`${process.env.API_URL}/api/restoration-list`, {cache: "no-cache"});
+    return await res.json();
+}
+type Lang = 'en' | 'ru';
 
-const Footer = () => {
+const Footer = async ({lang}:{lang: Lang}) => {
+    const restorationList: RestorationList = await GetRestorationList();
+
     return (
         <div className={'footer-cont'}>
             <div className="line"></div>
             <div className="up container">
                 <div className="column">
                     <h1>Restoration</h1>
-                    <Link href={'/'}>Custom-tailored</Link>
-                    <Link href={'/'}>Industrial</Link>
-                    <Link href={'/'}>Museum</Link>
+                    {restorationList.results.map((item, index) => (
+                        <Link href={`/${lang}/${item.slug}`} key={index}>{item[`name_${lang}`]}</Link>
+                    ))}
                 </div>
                 <div className="column">
                     <h1>Contact</h1>

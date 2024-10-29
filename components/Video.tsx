@@ -4,8 +4,9 @@ import Image from 'next/image';
 import videoBG from '@/public/video_bg.jpg';
 import videoIcon from '@/public/video-button.svg';
 
+type Lang = 'en' | 'ru';
 
-const YouTubeThumbnail = ({ videoId }: { videoId: string }) => {
+const YouTubeThumbnail = ({ videoId, lang }: { videoId: string, lang: Lang }) => {
     const [isPlaying, setIsPlaying] = useState(false);
 
     const handlePlayClick = () => {
@@ -22,6 +23,17 @@ const YouTubeThumbnail = ({ videoId }: { videoId: string }) => {
         window.addEventListener('resize', checkScreenWidth);
         return () => window.removeEventListener('resize', checkScreenWidth);
     }, []);
+
+    const data = {
+        en: {
+            title: 'Understanding. Reality. Newton’s cradle.',
+            text: 'FIXWORKS – choosing the best'
+        },
+        ru: {
+            title: 'Взаимопонимание. Реальность. Колыбель Ньютона.',
+            text: 'FIXWORKS - выбирая лучшее'
+        },
+    };
 
     return (
         <div className={'xdvg'}>
@@ -47,8 +59,8 @@ const YouTubeThumbnail = ({ videoId }: { videoId: string }) => {
                 )}
 
                 <div className="text">
-                    <h3>Understanding. Reality. Newton’s cradle.</h3>
-                    <p>FIXWORKS – choosing the best</p>
+                    <h3>{data[`${lang}`].title}</h3>
+                    <p>{data[`${lang}`].text}</p>
                 </div>
             </div>
             <div className="line"></div>

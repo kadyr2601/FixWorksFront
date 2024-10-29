@@ -7,9 +7,12 @@ import icon3 from '@/public/icon3.svg';
 import icon4 from '@/public/icon4.svg';
 import icon5 from '@/public/icon5.svg';
 import icon6 from '@/public/icon6.svg';
+import {getDictionary, Locale} from "@/app/dictionaries";
 
 
-const Main4 = async () => {
+const Main4 = async ({lang}: {lang: string}) => {
+
+    const dict = await getDictionary(lang as Locale);
 
     return (
         <div className={'main4-cont'}>

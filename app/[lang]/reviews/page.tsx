@@ -4,6 +4,7 @@ import {PageBanner, ReviewList} from "@/components/DTOs";
 import SingleBanner from "@/components/layout/SingleBanner";
 import Services from "@/components/Services";
 import ReviewComponent from "@/components/ReviewComponent";
+import MainBanner from "@/components/MainBanner";
 
 
 async function getFeedbacks() {
@@ -26,10 +27,12 @@ export default async function Page({ params: { lang } }: PageProps) {
 
     return (
         <div className={'reviews-section'}>
+
+            <MainBanner pathname={"reviews"}/>
+
             <h1 className={'container'}>CUSTOMER FEEDBACK</h1>
 
             <ReviewComponent reviews={reviews} lang={lang}/>
-
 
             {imageBanners.map(b => <SingleBanner key={b.id} props={b} lang={lang}/>)}
             <Services lang={lang} page={'reviews'}/>
