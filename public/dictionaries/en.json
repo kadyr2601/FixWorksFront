@@ -1,10 +1,19 @@
 {
   "home": {
     "section1": "With us you can",
-
-    "main4-1": "Always by your side",
-    "main4-2": "We will help you on the same day",
-    "main4-3": "We are attentive",
-    "main4-4": "To customer wishes"
+    "section2": "Always by your side",
+    "section2_2": "We will help you on the same day",
+    "section3": "We are attentive",
+    "section3_2": "To customer wishes",
+    "section4": "All over the world",
+    "section4_2": "We work all across Russia and abroad",
+    "section5": "We value our clients",
+    "section5_2": "We do our best",
+    "section6": "We are always open",
+    "section6_2": "To new experiences",
+    "section7": "We are good",
+    "section7_2": "At what we do",
+    "services_title": "ALL TYPES OF SERVICES",
+    "services_subtitle": "Restoration is a process of restoring the integrity of an item through the elimination of defects resulting from service life, such as: chips, strokes, breaks, cracks, etc. Improving and giving the item an appearance most closely resembling its original state."
   }
 }

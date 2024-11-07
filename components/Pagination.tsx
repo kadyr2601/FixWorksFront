@@ -17,7 +17,7 @@ const Pagination: React.FC<PaginationProps> = ({currentPage,totalItems,itemsPerP
     const router = useRouter()
 
     const onPageChange = (page: number) => {
-        router.push(`/${lang}/portfolio/${page}`);
+        router.push(`/${lang}/portfolio?page=${page}`);
     }
 
     const handlePrevious = () => {

@@ -1,23 +1,34 @@
-'use server';
 import React from 'react';
-import {Blog} from "@/components/DTOs";
+import {Blog} from "@/components/BlogPageDTO";
 import Image from "next/image";
 import Link from "next/link";
 import { GoArrowLeft } from "react-icons/go";
+import {Metadata} from "next";
+import {SEOSettings} from "@/components/DTOs";
 
 async function getBlog(slug: string) {
-    const res = await fetch(`${process.env.API_URL}/api/blog/${slug}`, { cache: 'no-store' });
+    const res = await fetch(`${process.env.API_URL}/blogs_page/retrieve/${slug}`, { cache: 'no-store' });
+    if (!res.ok) return null;
     return res.json();
 }
 
-interface PageProps { params: { lang: string, slug: string} }
+interface PageProps { params: { lang: "ru" | "en", slug: string} }
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+    const res = await fetch(`${process.env.API_URL}/blogs_page/retrieve/${params.slug}`, { cache: 'no-store' });
+    const seoData: Blog = await res.json();
+    return {title: seoData[`title_${params.lang}`], description: seoData[`first_paragraph_${params.lang}`]}
+}
+
 
 export default async function Page({ params: { lang, slug } }: PageProps) {
-    const blog: Blog = await getBlog(slug);
+    const blog: Blog | null = await getBlog(slug);
 
     if (!blog) return <div>No results found.</div>;
 
-    const BackButton = () => <Link href={`/${lang}/blog`} replace><GoArrowLeft className={'back-icon'}/> View all Posts</Link>;
+    const BackButton = () => <Link href={`/${lang}/blog`} replace><GoArrowLeft className={'back-icon'}/>
+        {lang == "ru" ? "К списку постов" : "View all Posts"}
+        </Link>;
 
     return (
         <div className={'details container'}>

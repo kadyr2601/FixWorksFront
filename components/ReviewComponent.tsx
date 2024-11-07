@@ -1,7 +1,6 @@
 'use client';
-
 import React, { useState } from 'react';
-import { ReviewList } from "@/components/DTOs";
+import { ReviewList } from "@/components/ReviewsPageDTO";
 import Image from "next/image";
 import { MdOutlineClose } from "react-icons/md";
 

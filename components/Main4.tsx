@@ -12,7 +12,7 @@ import {getDictionary, Locale} from "@/app/dictionaries";
 
 const Main4 = async ({lang}: {lang: string}) => {
 
-    const dict = await getDictionary(lang as Locale);
+    const t = await getDictionary(lang as Locale);
 
     return (
         <div className={'main4-cont'}>
@@ -25,43 +25,43 @@ const Main4 = async ({lang}: {lang: string}) => {
                                 <div className="image">
                                     <Image src={icon1} alt={'icon1'} fill={true}/>
                                 </div>
-                                <h4>Always by your side</h4>
-                                <p>We will help you on the same day</p>
+                                <h4>{t.home.section2}</h4>
+                                <p>{t.home.section2_2}</p>
                             </div>
                             <div className="row">
                                 <div className="image">
                                     <Image src={icon2} alt={'icon1'} fill={true}/>
                                 </div>
-                                <h4>We are attentive</h4>
-                                <p>To customer wishes</p>
+                                <h4>{t.home.section3}</h4>
+                                <p>{t.home.section3_2}</p>
                             </div>
                             <div className="row">
                                 <div className="image">
                                     <Image src={icon3} alt={'icon1'} fill={true}/>
                                 </div>
-                                <h4>All over the world</h4>
-                                <p>We work all across Russia and abroad</p>
+                                <h4>{t.home.section4}</h4>
+                                <p>{t.home.section4_2}</p>
                             </div>
                             <div className="row">
                                 <div className="image">
                                     <Image src={icon4} alt={'icon1'} fill={true}/>
                                 </div>
-                                <h4>We value our clients</h4>
-                                <p>We do our best</p>
+                                <h4>{t.home.section5}</h4>
+                                <p>{t.home.section5_2}</p>
                             </div>
                             <div className="row">
                                 <div className="image">
                                     <Image src={icon5} alt={'icon1'} fill={true}/>
                                 </div>
-                                <h4>We are always open</h4>
-                                <p>To new experiences</p>
+                                <h4>{t.home.section6}</h4>
+                                <p>{t.home.section6_2}</p>
                             </div>
                             <div className="row">
                                 <div className="image">
                                     <Image src={icon6} alt={'icon1'} fill={true}/>
                                 </div>
-                                <h4>We are good</h4>
-                                <p>At what we do</p>
+                                <h4>{t.home.section7}</h4>
+                                <p>{t.home.section7_2}</p>
                             </div>
                         </div>
                     </div>

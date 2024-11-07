@@ -1,23 +1,22 @@
 import React from 'react';
+import {CounterBanner} from "@/components/HomePageDTO";
 
 
-const Counter = async () => {
+const Counter = async ({props, lang}: { props: CounterBanner[], lang: "ru"|"en" }) => {
     return (
         <div className={'counter-cont container'}>
-            <div className="column">
-                <h1>650</h1>
-                <p>Varnished portals</p>
-            </div>
+            {
+                props.map((item, index) => {
+                    return (
+                        <div className="column" key={index}>
+                            <h1>{item.number}</h1>
+                            <p>{lang === "ru" ? item.text_ru : item.text_en}</p>
+                        </div>
+                    );
+                }
+            )
+            }
 
-            <div className="column">
-                <h1>29 000</h1>
-                <p>Defects repaired per year</p>
-            </div>
-
-            <div className="column">
-                <h1>1 860</h1>
-                <p>Sq.m. of oiled parquet</p>
-            </div>
         </div>
     );
 };

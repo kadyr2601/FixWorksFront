@@ -44,7 +44,7 @@
                 }
 
                 .title {
-                    font-size: 1.1em;
+                    font-size: 1em;
                     line-height: 1.3em;
                     font-weight: 500;
                     color: #fff;
@@ -61,13 +61,12 @@
                 }
 
                 p {
-                    margin-top: 10px;
                     color: #9CAEBA;
-                    font-size: 1em;
+                    font-size: 0.9em;
                     line-height: 1.3em;
                     font-weight: 500;
-                    min-height: 60px;
-                    max-height: 60px;
+                    min-height: 55px;
+                    max-height: 55px;
                     overflow: hidden;
                     text-align: left;
                     display: -webkit-box;
@@ -75,6 +74,7 @@
                     text-transform: none;
                     -webkit-box-orient: vertical;
                     font-family: "Montserrat Medium", Arial, sans-serif;
+                    margin-top: 0;
                 }
 
                 &:hover {

@@ -7,42 +7,50 @@ import Counter from "@/components/Counter";
 import Reviews from "@/components/Reviews";
 import Services from "@/components/Services";
 import Partners from "@/components/partners";
-import SingleBanner from "@/components/layout/SingleBanner";
-import {PageBanner} from "@/components/DTOs";
+import {PageBanner, SEOSettings} from "@/components/DTOs";
 import MainBanner from "@/components/MainBanner";
 import React from "react";
+import {Metadata} from "next";
+import {HomePageDTO} from "@/components/HomePageDTO";
+import SingleBannerImage from "@/components/layout/SingleBannerImage";
+import SingleBannerVideo from "@/components/layout/SingleBannerVideo";
 
 
-async function getBanner(page: string) {
-    const res = await fetch(`${process.env.API_URL}/api/page-banner/${page}`, { cache: 'no-store' });
-    return res.json();
+async function getHomePage() {
+    const res = await fetch(`${process.env.API_URL}/home_page`, { cache: 'no-store' });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data as HomePageDTO;
 }
 
-type Lang = 'en' | 'ru';
+interface PageProps { params: { lang: 'en' | 'ru' } }
 
-interface PageProps { params: { lang: Lang } }
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+    const res = await fetch(`${process.env.API_URL}/service/seo/home`, {cache: "no-cache"});
+    const seoData: SEOSettings = await res.json();
+    return {title: seoData[`title_${params.lang}`], description: seoData[`description_${params.lang}`]}
+}
 
 export default async function Page({ params: { lang } }: PageProps) {
 
-    // const dict = await getDictionary(lang as Locale);
+    const dict = await getDictionary(lang as Locale);
 
-    const banner: PageBanner[] = await getBanner('home');
-    const imageBanners = banner.filter(b => b.type === 'image');
-    const videoBanners = banner.filter(b => b.type === 'video');
+    const homePage = await getHomePage();
+    if (!homePage) return <div>No results found.</div>;
 
     return (
         <>
-            <MainBanner pathname={"home"}/>
-            <TripleCardsBanner lang={lang} page={'home'}/>
+            {homePage.main_banner && <MainBanner banner={homePage.main_banner}/>}
+            {homePage.restoration_banner && <TripleCardsBanner lang={lang} services={homePage.restoration_banner}/>}
             <YouTubeEmbed videoId="0xX9YkCjlLo" lang={lang}/>
             <Main4 lang={lang}/>
-            <AboutUs/>
-            <Counter/>
-            {imageBanners.map(b => <SingleBanner key={b.id} props={b} lang={lang}/>)}
-            <Reviews/>
-            <Services lang={lang} page={'home'}/>
-            <Partners/>
-            {videoBanners.map(b => <SingleBanner key={b.id} props={b} lang={lang}/>)}
+            {homePage.about_us && <AboutUs props={homePage.about_us} lang={lang}/>}
+            {homePage.counter_banner && <Counter lang={lang} props={homePage.counter_banner}/>}
+            {homePage.single_banner_image && <SingleBannerImage props={homePage.single_banner_image} lang={lang}/>}
+            {homePage.reviews_banner && <Reviews props={homePage.reviews_banner} lang={lang}/>}
+            {homePage.services_banner && <Services lang={lang} props={homePage.services_banner}/>}
+            {homePage.partners_banner && <Partners props={homePage.partners_banner} lang={lang}/>}
+            {homePage.single_banner_video && <SingleBannerVideo props={homePage.single_banner_video} lang={lang}/>}
         </>
     );
 }

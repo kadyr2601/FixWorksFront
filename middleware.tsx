@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const locales = ['en-US', 'en', 'ru', 'ru-RU'];
+const locales = ['en', 'ru'];
 
 function getLocale(request: NextRequest) {
     const acceptLanguage = request.headers.get('accept-language') || '';
@@ -19,6 +19,15 @@ export function middleware(request: NextRequest) {
     );
 
     if (pathnameHasLocale) {
+        return NextResponse.next();
+    }
+    const PUBLIC_FILE = /\.(.*)$/;
+
+    if (
+        pathname.startsWith('/_next') ||
+        pathname.startsWith('/static') ||
+        PUBLIC_FILE.test(pathname)
+    ) {
         return NextResponse.next();
     }
 

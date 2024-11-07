@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { MdOutlineClose } from 'react-icons/md';
-import { FaCloudUploadAlt } from 'react-icons/fa'; // Иконка для загрузки
+import { FaCloudUploadAlt } from 'react-icons/fa';
 
-const FeedbackModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
+const FeedbackModal = ({ isOpen, onClose, lang }: { isOpen: boolean; onClose: () => void, lang: "ru" | "en" }) => {
     const [formData, setFormData] = useState({
         name: '',
         phone: '',
@@ -24,7 +24,7 @@ const FeedbackModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
             if (!emailRegex.test(value)) {
                 setEmailError('Please enter a valid email address');
             } else {
-                setEmailError(null); // Очищаем ошибку, если email корректен
+                setEmailError(null);
             }
         }
 
@@ -34,7 +34,6 @@ const FeedbackModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
         }));
     };
 
-    // Handle file input changes
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const selectedFiles = e.target.files;
         if (selectedFiles) {
@@ -45,13 +44,11 @@ const FeedbackModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
         }
     };
 
-    // Form validation
     const validateForm = () => {
         const { name, phone, email, message } = formData;
         if (!name || !phone || !email || !message) {
             return false;
         }
-        // Check if email is valid
         if (!emailRegex.test(email)) {
             setEmailError('Please enter a valid email address');
             return false;
@@ -77,11 +74,11 @@ const FeedbackModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
             formDataToSend.append('email', formData.email);
             formDataToSend.append('message', formData.message);
             formData.files.forEach((file, index) => {
-                formDataToSend.append(`files[${index}]`, file); // Attach files to the form data
+                formDataToSend.append(`files[${index}]`, file);
             });
 
 
-            const response = await fetch(`${process.env.API_URL}/api/feedback-create`, {
+            const response = await fetch(`${process.env.API_URL}/service/feedback-create`, {
                 method: 'POST',
                 body: formDataToSend
             });
@@ -122,7 +119,7 @@ const FeedbackModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                             type="text"
                             id="name"
                             name="name"
-                            placeholder="Name"
+                            placeholder={lang == 'en' ? "Name" : "Имя"}
                             value={formData.name}
                             onChange={handleChange}
                             required
@@ -131,7 +128,7 @@ const FeedbackModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                             type="number"
                             id="phone"
                             name="phone"
-                            placeholder="Phone"
+                            placeholder={lang == 'en' ? "Phone": "Номер телефона"}
                             value={formData.phone}
                             onChange={handleChange}
                             required
@@ -140,7 +137,7 @@ const FeedbackModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                             type="email"
                             id="email"
                             name="email"
-                            placeholder="E-mail"
+                            placeholder={lang == 'en' ? "E-mail" : "Электронная почта"}
                             value={formData.email}
                             onChange={handleChange}
                             required
@@ -149,17 +146,20 @@ const FeedbackModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                         <textarea
                             id="message"
                             name="message"
-                            placeholder="Message"
+                            placeholder={lang == 'en' ? "Message" : "Сообщение"}
                             value={formData.message}
                             onChange={handleChange}
                             required
                         ></textarea>
 
-                        {/* Кастомный input для файлов с иконкой */}
                         <div className="file-upload">
                             <label htmlFor="file-upload">
                                 <FaCloudUploadAlt size={50}/>
-                                <p>You can upload up to 10 files</p>
+                                <p>
+                                    {
+                                    lang == 'en' ? "You can upload up to 10 files" : "Вы можете загрузить до 10 файлов"
+                                    }
+                                </p>
                             </label>
                             <input
                                 type="file"
@@ -174,7 +174,7 @@ const FeedbackModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                         {error && <p style={{color: 'red'}}>{error}</p>}
 
                         <div className="btn" onClick={handleSubmit}>
-                            {loading ? 'Sending...' : 'Send'}
+                            {loading ? 'Sending...' : lang == 'en' ? 'Send' : 'Отправить'}
                         </div>
                     </div>
                 </div>

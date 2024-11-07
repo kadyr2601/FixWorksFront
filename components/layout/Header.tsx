@@ -6,17 +6,17 @@ import Link from 'next/link';
 import LanguageButton from "@/components/layout/LanguageButton";
 import Menu from "@/components/layout/Menu";
 import FeedbackModal from "@/components/Feedback";
+import {ContactsPageDTO} from "@/components/ContactsPageDTO";
 
 
 type Lang = 'en' | 'ru';
 
 const Header = ({lang}:{lang: Lang}) => {
 
+    const [contacts, setContacts] = useState<ContactsPageDTO | null>(null);
     const [menuActive, setMenuActive] = useState(false);
 
-    const toggleMenu = () => {
-        setMenuActive(!menuActive);
-    };
+    const toggleMenu = () => {setMenuActive(!menuActive);};
 
     useEffect(() => {
         if (menuActive) {
@@ -44,19 +44,24 @@ const Header = ({lang}:{lang: Lang}) => {
         return () => window.removeEventListener('resize', checkScreenWidth);
     }, []);
 
+    useEffect(() => {
+        const fetchContactsPage = async () => {
+            const res = await fetch(`${process.env.API_URL}/contacts_page`, { cache: 'no-store' });
+            if (res.ok) {
+                const data: ContactsPageDTO = await res.json();
+                setContacts(data);
+            }
+        };
+
+        fetchContactsPage();
+    }, []);
+
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const openModal = () => {
-        setIsModalOpen(true);
-    };
-
-    const closeModal = () => {
-        setIsModalOpen(false);
-    };
+    const openModal = () => {setIsModalOpen(true);};
+    const closeModal = () => {setIsModalOpen(false);};
 
     const feedbackBtnName = lang === 'en' ? 'get in touch' : 'связаться';
-
-
     const links: Record<Lang, { projects: string; portfolio: string; reviews: string; blog: string; contact: string }> = {
         en: {
             projects: 'Projects',
@@ -77,7 +82,7 @@ const Header = ({lang}:{lang: Lang}) => {
 
     return (
         <div className={'header-cont'}>
-            <FeedbackModal isOpen={isModalOpen} onClose={closeModal} />
+            <FeedbackModal isOpen={isModalOpen} onClose={closeModal} lang={lang}/>
 
             <div className="header-top">
                 <div className="block">
@@ -103,25 +108,18 @@ const Header = ({lang}:{lang: Lang}) => {
                         <Link href={`/${lang}/contact`} onClick={toggleMenu}>{links[`${lang}`].contact}</Link>
                     </div>
                     <div className="info">
-
-                        <div className="row">
-                            <Link href={'tel:8 800 551-41-34'}>8 800 551-41-34</Link>
-                            <p>Бесплатный звонок по России</p>
-                        </div>
-                        <div className="row">
-                            <Link href={'tel:+7 906 093-17-34'}>+7 906 093-17-34</Link>
-                            <p>Мобильный (дополнительный)</p>
-                        </div>
-
-                        <div className="row">
-                            <Link href={'tel:+971 56 506-2277'}>+971 56 506-2277</Link>
-                            <p>Дубай</p>
-                        </div>
-
-                        <div className="row">
-                            <Link href={'mailto:info@fixworks.ru'}>info@fixworks.ru</Link>
-                            <p>По любому вопросу реставрации</p>
-                        </div>
+                        {contacts && contacts.phones.map((phone, index) => (
+                            <div className="row" key={index}>
+                                <Link href={`tel:${phone.phone}`}>{phone.phone}</Link>
+                                <p>{phone[`description_${lang}`]}</p>
+                            </div>
+                        ))}
+                        {contacts && contacts.emails.map((email, index) => (
+                            <div className="row" key={index}>
+                                <Link href={`mailto:${email.email}`}>{email.email}</Link>
+                                <p>{email[`description_${lang}`]}</p>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>

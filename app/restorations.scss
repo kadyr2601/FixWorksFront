@@ -1,0 +1,123 @@
+
+.restoration {
+    .section-a {
+
+    }
+
+    .section-b {
+        padding: 120px 0;
+
+        .images {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            position: relative;
+
+            .image {
+                position: relative;
+                width: 763px;
+                height: 470px;
+
+                img {
+                    object-fit: cover;
+                    border-radius: 10px;
+                }
+
+                &:nth-child(2) {
+                    margin-top: 120px;
+                    margin-left: -100px;
+                }
+            }
+
+            .arrow-cont {
+                position: absolute;
+                top: 80%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 997;
+
+                .arrow {
+                    position: relative;
+                    height: 110px;
+                    width: 160px;
+
+                    img {
+                        object-fit: cover;
+                    }
+                }
+            }
+
+        }
+    }
+
+    .faq-section {
+        padding: 120px 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        h2 {
+            text-align: center;
+        }
+
+        .faq-cont {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-top: 40px;
+            width: 935px;
+
+            .faq {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                border-bottom: 1px solid rgba(156, 174, 186, 0.2);
+                position: relative;
+
+                .answer {
+                    opacity: 0;
+                    transform: translateY(-10px);
+                    transition: opacity 0.3s ease, transform 0.3s ease;
+                    position: absolute;
+                    text-align: justify;
+                    padding: 20px 0;
+                }
+
+                .title {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: space-between;
+                    cursor: pointer;
+                    padding: 20px 0;
+
+                    .iconPlus {
+                        color: #f54f5d;
+                    }
+                    .iconMinus {
+                        color: #f54f5d;
+                        display: none;
+                    }
+                }
+
+                &:hover {
+                    .title {
+                        .iconPlus {
+                            display: none;
+                        }
+                        .iconMinus {
+                            display: block;
+                        }
+                    }
+                    .answer {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+
+            }
+        }
+    }
+
+}

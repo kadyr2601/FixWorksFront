@@ -1,39 +1,22 @@
-'use server';
 import React from 'react';
 import Card from "@/components/layout/Card";
-import {ServicesBanner} from "@/components/DTOs";
+import {ServiceBanner} from "@/components/HomePageDTO";
+import {getDictionary, Locale} from "@/app/dictionaries";
 
 
-async function getServiceCards(page: string) {
-    const res = await fetch(`${process.env.API_URL}/api/services-banner/${page}`, {cache: "no-cache"});
-    if (res.status !== 200) {
-        return undefined
-    }
-    return await res.json();
-}
-
-export default async function Services({page, lang}: { page: string, lang: string }){
-    const services: ServicesBanner | undefined = await getServiceCards(page);
-
-    if (!services) {
-        return null;
-    }
-
+export default async function Services({props, lang}: { props: ServiceBanner[], lang: "ru" | "en" }){
+    const t = await getDictionary(lang as Locale);
     return (
         <div className={'services-cont'}>
             <div className="container">
                 <div className="block">
                     <div className="left">
-                        <span>ALL TYPES OF SERVICES</span>
-                        <p>
-                            Restoration is a process of restoring the integrity of an item through the elimination
-                            of defects resulting from service life, such as: chips, strokes, breaks, cracks, etc.
-                            Improving and giving the item an appearance most closely resembling its original state.
-                        </p>
+                        <span>{t.home.services_title}</span>
+                       <p>{t.home.services_subtitle}</p>
                     </div>
                     <div className="right">
-                        {services.cards.map((card, index) => (
-                            <Card key={index} name={card[`name_${lang}`]}  image={card.icon} />
+                        {props.map((card, index) => (
+                            <Card key={index} name={card[`name_${lang}`]} image={card.icon} lang={lang} slug={card.slug}/>
                         ))}
                     </div>
                 </div>

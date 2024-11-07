@@ -48,6 +48,7 @@ p {
     color: #9CAEBA;
     font-size: 16px;
     line-height: 24px;
+    white-space: pre-wrap;
 
     @media screen and (max-width: 768px) {
         font-size: 14px;
@@ -311,6 +312,7 @@ a {
 .header-banner {
     width: 100vw;
     margin-top: -108px;
+    margin-bottom: 25px;
 
     @media screen and (max-width: 768px) {
         margin-top: -76px;
@@ -789,7 +791,7 @@ a {
 
         .slider-container {
 
-            .review {
+            .review-b {
                 height: 297px;
                 width: 434px;
                 padding: 24px;
@@ -807,6 +809,8 @@ a {
 
                 p {
                     color: white;
+                    max-height: 170px;
+                    overflow: hidden;
                 }
 
                 .r-info {
@@ -1362,4 +1366,104 @@ a {
         }
     }
 
+}
+
+
+.contacts-page {
+    position: relative;
+
+    @media screen and (max-width: 1024px) {
+        .container {
+            padding-top: 400px;
+        }
+
+    }
+
+    .data {
+        display: flex;
+        flex-direction: row;
+        gap: 50px;
+        position: absolute;
+        z-index: 997;
+        width: 1420px;
+        top: 10%;
+        left: 50%;
+        transform: translate(-50%, 40%);
+
+        @media screen and (max-width: 1024px) {
+            width: 100%;
+            padding: 0 20px;
+            flex-direction: column;
+            transform: translate(-50%, 10%);
+
+            .column {
+                width: 100%;
+            }
+
+            .column-b {
+                width: 100%;
+            }
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+            gap: 70px;
+            justify-content: space-between;
+            width: 50%;
+        }
+
+        .column-b {
+            display: flex;
+            flex-direction: row;
+            gap: 50px;
+            justify-content: space-between;
+            width: 50%;
+
+            .row {
+                display: flex;
+                flex-direction: column;
+
+                .up {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    gap: 10px;
+                    margin-bottom: 25px;
+
+                    .image {
+                        position: relative;
+                        height: 24px;
+                        width: 24px;
+
+                        img {
+                            object-fit: contain;
+                        }
+                    }
+                }
+
+                .down {
+                    p {
+                        margin-bottom: 15px;
+                    }
+                }
+            }
+        }
+
+        @media screen and (max-width: 1024px) {
+            width: 100%;
+            padding: 0 20px;
+            flex-direction: column;
+            transform: translate(-50%, 0);
+
+            .column {
+                width: 100%;
+            }
+
+            .column-b {
+                width: 100%;
+                flex-direction: column;
+            }
+        }
+    }
 }

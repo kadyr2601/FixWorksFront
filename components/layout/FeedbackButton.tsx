@@ -2,7 +2,7 @@
 import React, {useState} from 'react';
 import FeedbackModal from "@/components/Feedback";
 
-const FeedbackButton = () => {
+const FeedbackButton = ({lang} : {lang: "ru" | "en"}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const openModal = () => {
@@ -15,8 +15,8 @@ const FeedbackButton = () => {
 
     return (
         <>
-            <div className={`feedback-btn`} onClick={openModal}>Leave an application</div>
-            <FeedbackModal isOpen={isModalOpen} onClose={closeModal} />
+            <div className={`feedback-btn`} onClick={openModal}>{lang == "en" ? "Leave an application" : "Оставить заявку"}</div>
+            <FeedbackModal isOpen={isModalOpen} onClose={closeModal} lang={lang} />
         </>
     );
 };

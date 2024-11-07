@@ -1,6 +1,6 @@
 
 const nextConfig = {
-    reactStrictMode: false,
+    reactStrictMode: true,
     images: {
         remotePatterns: [
             {
@@ -10,7 +10,7 @@ const nextConfig = {
                 // pathname: '/media/**',
 
                 protocol: 'http',
-                hostname: '185.185.69.163',
+                hostname: 'fixworks-team.com',
                 port: '',
                 pathname: '/media/**',
             },
@@ -18,9 +18,8 @@ const nextConfig = {
     },
     env: {
         // API_URL: "http://127.0.0.1:8000",
-        // HostName: "localhost:3000"
-        API_URL: "http://185.185.69.163",
-        HostName: "http://185.185.69.163:3000"
+        HostName: "fixworks-team.com",
+        API_URL: "http://fixworks-team.com",
     },
 }
 

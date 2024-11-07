@@ -1,55 +1,76 @@
-'use server';
+// portfolio/page.tsx
 import React from 'react';
-import {PageBanner, BlogList} from "@/components/DTOs";
 import Image from "next/image";
-import SingleBanner from "@/components/layout/SingleBanner";
 import Services from "@/components/Services";
-import Pagination from "@/components/Pagination";
-import Link from "next/link";
 import MainBanner from "@/components/MainBanner";
+import SingleBannerImage from "@/components/layout/SingleBannerImage";
+import SingleBannerVideo from "@/components/layout/SingleBannerVideo";
+import {BlogList, BlogPageDTO} from "@/components/BlogPageDTO";
+import BlogPagination from "@/components/BlogPagination";
+import Link from "next/link";
+import {Metadata} from "next";
+import {SEOSettings} from "@/components/DTOs";
 
-
-async function getBlogList() {
-    const res = await fetch(`${process.env.API_URL}/api/blog-list`, { cache: 'no-store' });
+async function getPortfolioPage() {
+    const res = await fetch(`${process.env.API_URL}/blogs_page`, { cache: 'no-store' });
+    if (!res.ok) return null;
     return res.json();
 }
-async function getBanner(page: string) {
-    const res = await fetch(`${process.env.API_URL}/api/page-banner/${page}`, { cache: 'no-store' });
+
+async function getPortfolioList(page: number = 1) {
+    const res = await fetch(`${process.env.API_URL}/blogs_page/list?page=${page}`, { cache: 'no-store' });
+    if (!res.ok) return null;
     return res.json();
 }
 
-interface PageProps { params: { lang: string } }
+interface PageProps {
+    params: { lang: "ru" | "en" };
+    searchParams: { page?: string };
+}
 
-export default async function Page({ params: { lang } }: PageProps) {
-    const blog: BlogList = await getBlogList();
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+    const res = await fetch(`${process.env.API_URL}/service/seo/blog`, {cache: "no-cache"});
+    const seoData: SEOSettings = await res.json();
+    return {title: seoData[`title_${params.lang}`], description: seoData[`description_${params.lang}`]}
+}
 
-    const banner: PageBanner[] = await getBanner('blog');
-    const imageBanners = banner.filter(b => b.type === 'image');
-    const videoBanners = banner.filter(b => b.type === 'video');
 
-    if (!blog || !blog.results) return <div>No results found.</div>;
+export default async function Page({ params: { lang }, searchParams }: PageProps) {
+    const currentPage = Number(searchParams.page) || 1;
+    const page_data: BlogPageDTO | null = await getPortfolioPage();
+    const blogs: BlogList | null = await getPortfolioList(currentPage);
+
+    if (!page_data || !blogs) return <div>No results found.</div>;
 
     return (
-        <div className={'blog-section'}>
-            <MainBanner pathname={"blog"}/>
-            <h1 className={'container'}>Blog</h1>
+        <div className="blog-section">
+            {page_data.main_banner && <MainBanner banner={page_data.main_banner}/>}
+            <h1 className="container">{lang === "en" ? "Blog" : "Блог"}</h1>
             <div className="result">
                 <div className="grid container">
-                    {blog.results.map((obj, index) => (
-                        <Link href={`/${lang}/blog/${obj.slug}`} className={'block'} key={index} replace>
+                    {blogs.results.map((blog, index) => (
+                        <Link href={`/${lang}/blog/${blog.slug}`} className="block" key={index}>
                             <div className="image">
-                                <Image src={obj.image} alt={obj.title_en} fill={true}/>
+                                <Image src={blog.image} alt={blog[`title_${lang}`]} fill={true} />
                             </div>
-                            <h1 className={'title'}>{obj[`title_${lang}`]}</h1>
-                            <p>{obj[`first_paragraph_${lang}`]}</p>
+                            <h1 className="title">{blog[`title_${lang}`]}</h1>
+                            <p>{blog[`first_paragraph_${lang}`]}</p>
                         </Link>
                     ))}
                 </div>
+                {blogs.count > 0 && (
+                    <BlogPagination
+                        currentPage={currentPage}
+                        totalItems={blogs.count}
+                        itemsPerPage={20}
+                        lang={lang}
+                    />
+                )}
             </div>
 
-            {imageBanners.map(b => <SingleBanner key={b.id} props={b} lang={lang}/>)}
-            <Services lang={lang} page={'blog'}/>
-            {videoBanners.map(b => <SingleBanner key={b.id} props={b} lang={lang}/>)}
+            {page_data.single_banner_image && <SingleBannerImage props={page_data.single_banner_image} lang={lang}/>}
+            {page_data.services_banner && <Services lang={lang} props={page_data.services_banner}/>}
+            {page_data.single_banner_video && <SingleBannerVideo props={page_data.single_banner_video} lang={lang}/>}
         </div>
     );
-};
+}

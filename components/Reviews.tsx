@@ -2,10 +2,10 @@
 import React, {useEffect, useState} from 'react';
 import Slider from 'react-slick';
 import Image from 'next/image';
-import userimg from '@/public/user.svg';
 import arrow from '@/public/arrow.svg';
 import arrowShort from '@/public/arrow-short.svg';
-
+import {ReviewBanner} from "@/components/HomePageDTO";
+import {useRouter} from "next/navigation";
 
 const PrevArrow = (props: any) => {
     const { onClick } = props;
@@ -25,9 +25,14 @@ const NextArrow = (props: any) => {
     );
 };
 
-const Reviews = () => {
+const Reviews = ({props, lang}:{props: ReviewBanner[], lang: "ru" | "en"}) => {
 
     const [isMobile, setIsMobile] = useState(false);
+    const router = useRouter();
+
+    const handleRedirectReviews = () => {
+        router.push('/reviews');
+    }
 
     useEffect(() => {
         const checkScreenWidth = () => {
@@ -56,122 +61,24 @@ const Reviews = () => {
     return (
         <div className="container">
             <div className="reviews-cont">
-                <h2>Reviews</h2>
+                <h2>{lang == "en" ? "Reviews" : "Отзывы"}</h2>
                 <div className="reviewss">
                     <div className="slider-container">
                         <Slider {...settings}>
-                            <div>
-                                <div className="review">
-                                    <p>
-                                        Thank you for a job well done. The restorative girl Milena was very careful and
-                                        attentive to our
-                                        problem. It was necessary to remove cracks in the ceramic tiles…
-                                    </p>
-                                    <div className="r-info">
-                                        <Image src={userimg} alt={'icon'} width={52} height={52}/>
-                                        <div className="r-text">
-                                            <span>Iryna</span>
-                                            <p>Private person, Moscow</p>
+                            {props.map((item, index) => (
+                                <div key={index}>
+                                    <div className="review-b">
+                                        <p>{item[`comment_${lang}`]}</p>
+                                        <div className="r-info">
+                                            <Image src={item.image} alt={'icon'} width={52} height={52}/>
+                                            <div className="r-text">
+                                                <span>{item.fullname}</span>
+                                                <p>{item.location}</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div>
-                                <div className="review">
-                                    <p>
-                                        Thank you for a job well done. The restorative girl Milena was very careful and
-                                        attentive to our
-                                        problem. It was necessary to remove cracks in the ceramic tiles…
-                                    </p>
-                                    <div className="r-info">
-                                        <Image src={userimg} alt={'icon'} width={52} height={52}/>
-                                        <div className="r-text">
-                                            <span>Iryna</span>
-                                            <p>Private person, Moscow</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <div className="review">
-                                    <p>
-                                        Thank you for a job well done. The restorative girl Milena was very careful and
-                                        attentive to our
-                                        problem. It was necessary to remove cracks in the ceramic tiles…
-                                    </p>
-                                    <div className="r-info">
-                                        <Image src={userimg} alt={'icon'} width={52} height={52}/>
-                                        <div className="r-text">
-                                            <span>Iryna</span>
-                                            <p>Private person, Moscow</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <div className="review">
-                                    <p>
-                                        Thank you for a job well done. The restorative girl Milena was very careful and
-                                        attentive to our
-                                        problem. It was necessary to remove cracks in the ceramic tiles…
-                                    </p>
-                                    <div className="r-info">
-                                        <Image src={userimg} alt={'icon'} width={52} height={52}/>
-                                        <div className="r-text">
-                                            <span>Iryna</span>
-                                            <p>Private person, Moscow</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <div className="review">
-                                    <p>
-                                        Thank you for a job well done. The restorative girl Milena was very careful and
-                                        attentive to our
-                                        problem. It was necessary to remove cracks in the ceramic tiles…
-                                    </p>
-                                    <div className="r-info">
-                                        <Image src={userimg} alt={'icon'} width={52} height={52}/>
-                                        <div className="r-text">
-                                            <span>Iryna</span>
-                                            <p>Private person, Moscow</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <div className="review">
-                                    <p>
-                                        Thank you for a job well done. The restorative girl Milena was very careful and
-                                        attentive to our
-                                        problem. It was necessary to remove cracks in the ceramic tiles…
-                                    </p>
-                                    <div className="r-info">
-                                        <Image src={userimg} alt={'icon'} width={52} height={52}/>
-                                        <div className="r-text">
-                                            <span>Iryna</span>
-                                            <p>Private person, Moscow</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <div className="review">
-                                    <p>
-                                        Thank you for a job well done. The restorative girl Milena was very careful and
-                                        attentive to our
-                                        problem. It was necessary to remove cracks in the ceramic tiles…
-                                    </p>
-                                    <div className="r-info">
-                                        <Image src={userimg} alt={'icon'} width={52} height={52}/>
-                                        <div className="r-text">
-                                            <span>Iryna</span>
-                                            <p>Private person, Moscow</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            ))}
                         </Slider>
                     </div>
                 </div>
@@ -181,7 +88,9 @@ const Reviews = () => {
                             <div className="border"></div>
                             <Image src={arrow} alt={'icon'} width={15} height={15}/>
                         </div>
-                        <p>VIEW ALL REVIEWS</p>
+                        <p onClick={handleRedirectReviews} style={{cursor: "pointer"}}>
+                            {lang == "en" ? "VIEW ALL REVIEWS" : "ВСЕ ОТЗЫВЫ"}
+                        </p>
                     </div>
                 </div>
             </div>
