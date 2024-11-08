@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Image from "next/image";
 import {MainBannerDTo} from "@/components/DTOs";
 
-export default function MainBannerClient ({ banner }: { banner: MainBannerDTo}) {
+export default function MainBannerClient ({ banner}: { banner: MainBannerDTo}) {
     const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {

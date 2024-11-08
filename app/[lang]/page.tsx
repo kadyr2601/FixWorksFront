@@ -7,13 +7,13 @@ import Counter from "@/components/Counter";
 import Reviews from "@/components/Reviews";
 import Services from "@/components/Services";
 import Partners from "@/components/partners";
-import {PageBanner, SEOSettings} from "@/components/DTOs";
-import MainBanner from "@/components/MainBanner";
+import {SEOSettings} from "@/components/DTOs";
 import React from "react";
 import {Metadata} from "next";
 import {HomePageDTO} from "@/components/HomePageDTO";
 import SingleBannerImage from "@/components/layout/SingleBannerImage";
 import SingleBannerVideo from "@/components/layout/SingleBannerVideo";
+import MainBannerHomePage from "@/components/MainBannerHomePage";
 
 
 async function getHomePage() {
@@ -40,7 +40,7 @@ export default async function Page({ params: { lang } }: PageProps) {
 
     return (
         <>
-            {homePage.main_banner && <MainBanner banner={homePage.main_banner}/>}
+            {homePage.main_banner && <MainBannerHomePage banner={homePage.main_banner} lang={lang}/>}
             {homePage.restoration_banner && <TripleCardsBanner lang={lang} services={homePage.restoration_banner}/>}
             <YouTubeEmbed videoId="0xX9YkCjlLo" lang={lang}/>
             <Main4 lang={lang}/>

@@ -323,6 +323,95 @@ a {
         height: 100%;
         object-fit: cover;
     }
+
+    .container {
+        position: relative;
+
+        .header-text {
+            z-index: 999;
+            position: fixed;
+            top: 50%;
+            left: 15%;
+            transform: translateY(-50%);
+
+            h1 {
+                margin-bottom: 35px;
+            }
+
+            p {
+                margin-bottom: 70px;
+                color: white;
+            }
+
+            .down {
+                display: flex;
+                flex-wrap: nowrap;
+                align-items: center;
+                justify-content: space-between;
+                cursor: pointer;
+
+                .left {
+                    display: flex;
+                    flex-wrap: nowrap;
+                    align-items: center;
+
+                    .image {
+                        position: relative;
+                        width: 28px;
+                        height: 28px;
+                        margin-right: 10px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        cursor: pointer;
+
+                        .border {
+                            content: "";
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            right: 0;
+                            bottom: 0;
+                            padding: 2px;
+                            border-radius: 100px;
+                            background: linear-gradient(101.28deg, #14B3F4 -380.04%, #6549D5 -222.39%, #E33FA1 -64.73%, #FB5343 92.93%, #FD7B42 250.58%);
+                            -webkit-mask: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fff)) content-box, -webkit-gradient(linear, left top, left bottom, color-stop(0, #fff));
+                            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                            -webkit-mask-composite: source-out;
+                            mask-composite: exclude;
+                        }
+
+                        img {
+                            //transform: rotate(90deg);
+                            object-fit: none;
+                        }
+                    }
+                }
+
+                p {
+                    color: white;
+                    margin-bottom: 0;
+                    font-weight: 700;
+                    font-size: 12px;
+                    text-transform: uppercase;
+                }
+            }
+        }
+    }
+
+}
+
+.zoomIn {
+    animation: zoomInEffect 10s ease-out forwards;
+}
+
+@keyframes zoomInEffect {
+    from {
+        transform: scale(1);
+    }
+    to {
+        transform: scale(1.09); /* Adjust the scale factor as desired */
+    }
 }
 
 .header-menu-open {
@@ -1183,6 +1272,12 @@ a {
                 }
             }
 
+        }
+
+        .contact {
+            a {
+                text-transform: none;
+            }
         }
 
         @media screen and (max-width: 900px) {

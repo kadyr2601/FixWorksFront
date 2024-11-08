@@ -3,14 +3,21 @@ import Link from "next/link";
 import ScrollToTopButton from "@/components/layout/ScrollToTopButton";
 import { HiOutlineChatBubbleLeftEllipsis } from "react-icons/hi2";
 import {ServiceBanner} from "@/components/HomePageDTO";
+import {ContactsPageDTO} from "@/components/ContactsPageDTO";
 
 async function GetServices() {
     const res = await fetch(`${process.env.API_URL}/home_page/services`, {cache: "no-cache"});
     return await res.json();
 }
+async function GetContacts() {
+    const res = await fetch(`${process.env.API_URL}/contacts_page`, {cache: "no-cache"});
+    if (!res.ok) return null;
+    return await res.json();
+}
 
 const Footer = async ({lang}:{lang: 'en' | 'ru'}) => {
     const restorationList: ServiceBanner[] = await GetServices();
+    const contacts: ContactsPageDTO | null = await GetContacts();
 
     return (
         <div className={'footer-cont'}>
@@ -22,11 +29,14 @@ const Footer = async ({lang}:{lang: 'en' | 'ru'}) => {
                         <Link href={`/${lang}/${item.slug}`} key={index}>{item[`name_${lang}`]}</Link>
                     ))}
                 </div>
-                <div className="column">
+                <div className="contact column">
                     <h1>{lang == "ru" ? "Контакты" : "Contact"}</h1>
-                    <Link href={'tel:+971 (56) 506-2277'}>+971 (56) 506-2277</Link>
-                    <Link href={'tel:+971 (56) 506-4241'}>+971 (56) 506-4241</Link>
-                    <Link href={'mailto:info@fixworks-team.com'}>info@fixworks-team.com</Link>
+                    {contacts && contacts.phones.slice(0, 2).map((phone, index) => (
+                        <Link href={`tel:${phone.phone}`} key={index}>{phone.phone}</Link>
+                    ))}
+                    {contacts && contacts.emails.slice(0, 1).map((email, index) => (
+                        <Link href={`mailto:${email.email}`} key={index}>{email.email}</Link>
+                    ))}
                 </div>
                 <div className="column">
                     <h1>{lang == "ru" ? "В соцсетях" : "Follow us"}</h1>

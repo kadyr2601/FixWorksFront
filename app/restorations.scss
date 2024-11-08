@@ -1,5 +1,28 @@
 
 .restoration {
+
+    .update-notice {
+        padding: 120px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 50px;
+
+        .back {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            background-color: #FB5343;
+            color: white;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 15px;
+            text-transform: none;
+        }
+    }
     .section-a {
 
     }

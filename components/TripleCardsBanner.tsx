@@ -9,7 +9,7 @@ export default async function TripleCardsBanner({services, lang}: { services: Re
     const dict = await getDictionary(lang as Locale);
 
     return (
-        <div className={'cards-banner-cont'}>
+        <div className={'cards-banner-cont'} id="target-section">
             <div className="container">
                 <h2>{dict.home.section1}</h2>
                 <div className="cards">
