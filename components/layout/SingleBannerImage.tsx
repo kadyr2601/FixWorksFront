@@ -27,7 +27,7 @@ const SingleBannerImage = ({props, lang}:{props: BannerImage, lang: string}) => 
                 </div>
                 {
                     <div className={'image'} style={{height: isMobile ? "268px" : "330px"}}>
-                        <Image src={props.image} alt={'Single-Banner'} fill={true}/>
+                        <Image src={process.env.HostName + props.image} alt={'Single-Banner'} fill={true}/>
                     </div>
                 }
             </div>

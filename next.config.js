@@ -18,7 +18,7 @@ const nextConfig = {
     },
     env: {
         // API_URL: "http://127.0.0.1:8000",
-        HostName: "fixworks-team.com",
+        HostName: "https://fixworks-team.com",
         API_URL: "https://fixworks-team.com/cdn",
     },
 }

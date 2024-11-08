@@ -36,7 +36,7 @@ export default async function Page({ params: { lang } }: PageProps) {
             {page_data.project_list.map((project, index) => (
                 <div className={`column container ${index % 2 !== 0 ? 'reverse' : ''}`} key={index}>
                     <div className="image">
-                        <Image src={project.image} alt={project.title_en} fill={true}/>
+                        <Image src={process.env.HostName + project.image} alt={project.title_en} fill={true}/>
                     </div>
                     <div className="block">
                         <div className="up">

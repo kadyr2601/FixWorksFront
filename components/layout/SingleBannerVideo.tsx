@@ -25,7 +25,7 @@ const SingleBannerVideo = ({props, lang}:{props: BannerVideo, lang: "ru" | "en"}
                     <FeedbackButton lang={lang}/>
                 </div>
                 {
-                    <video width="100%" height={isMobile ? 270 : 576} src={props.video} autoPlay muted loop >
+                    <video width="100%" height={isMobile ? 270 : 576} src={process.env.HostName + props.video} autoPlay muted loop >
                         Your browser does not support the video tag.
                     </video>
                 }

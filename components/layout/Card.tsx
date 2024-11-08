@@ -20,7 +20,7 @@ const Card = ({ name, image, slug, lang }: CardProps) => {
     };
     return (
         <div className="card" onClick={handleClick}>
-            <Image alt={'b1'} src={image} fill={true}/>
+            <Image alt={'b1'} src={process.env.HostName + image} fill={true}/>
             <h3>{name}</h3>
             <p>Learn more <FiArrowRight color={"white"}/></p>
         </div>

@@ -70,7 +70,7 @@ const Reviews = ({props, lang}:{props: ReviewBanner[], lang: "ru" | "en"}) => {
                                     <div className="review-b">
                                         <p>{item[`comment_${lang}`]}</p>
                                         <div className="r-info">
-                                            <Image src={item.image} alt={'icon'} width={52} height={52}/>
+                                            <Image src={process.env.HostName + item.image} alt={'icon'} width={52} height={52}/>
                                             <div className="r-text">
                                                 <span>{item.fullname}</span>
                                                 <p>{item.location}</p>

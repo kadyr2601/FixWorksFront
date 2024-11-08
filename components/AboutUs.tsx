@@ -7,7 +7,7 @@ const AboutUs = async ({props, lang}: { props: AboutUsDTO, lang: "ru" | "en" }) 
         <div className={'container'}>
             <div className="about-cont">
                 <div className="left">
-                    <Image src={props.image} alt="About Us" fill={true}/>
+                    <Image src={process.env.HostName + props.image} alt="About Us" fill={true}/>
                 </div>
 
                 <div className="right">

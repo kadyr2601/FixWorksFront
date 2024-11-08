@@ -35,7 +35,7 @@ export default async function Page({ params: { lang, slug } }: PageProps) {
             <BackButton/>
             <h2>{blog[`title_${lang}`]}</h2>
             <div className="image">
-                <Image src={blog.image} alt={blog[`title_${lang}`]} fill={true}/>
+                <Image src={process.env.HostName + blog.image} alt={blog[`title_${lang}`]} fill={true}/>
             </div>
 
             <div className="content">

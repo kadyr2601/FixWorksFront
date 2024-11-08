@@ -41,6 +41,11 @@ export default async function Page({ params: { lang }, searchParams }: PageProps
 
     if (!page_data || !portfolio) return <div>No results found.</div>;
 
+    function getPathFromUrl(url: string) {
+        const urlObj = new URL(url);
+        return process.env.HostName + urlObj.pathname;
+    }
+
     return (
         <div className="portfolio-section">
             {page_data.main_banner && <MainBanner banner={page_data.main_banner}/>}
@@ -50,7 +55,7 @@ export default async function Page({ params: { lang }, searchParams }: PageProps
                     {portfolio.results.map((portfolioItem, index) => (
                         <div className="block" key={index}>
                             <div className="image">
-                                <Image src={portfolioItem.image} alt={portfolioItem[`title_${lang}`]} fill={true} />
+                                <Image src={getPathFromUrl(portfolioItem.image)} alt={portfolioItem[`title_${lang}`]} fill={true} />
                             </div>
                             <h1 className="title">{portfolioItem[`title_${lang}`]}</h1>
                         </div>

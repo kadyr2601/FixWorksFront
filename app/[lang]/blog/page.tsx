@@ -42,6 +42,11 @@ export default async function Page({ params: { lang }, searchParams }: PageProps
 
     if (!page_data || !blogs) return <div>No results found.</div>;
 
+    function getPathFromUrl(url: string) {
+        const urlObj = new URL(url);
+        return process.env.HostName + urlObj.pathname;
+    }
+
     return (
         <div className="blog-section">
             {page_data.main_banner && <MainBanner banner={page_data.main_banner}/>}
@@ -51,7 +56,7 @@ export default async function Page({ params: { lang }, searchParams }: PageProps
                     {blogs.results.map((blog, index) => (
                         <Link href={`/${lang}/blog/${blog.slug}`} className="block" key={index}>
                             <div className="image">
-                                <Image src={blog.image} alt={blog[`title_${lang}`]} fill={true} />
+                                <Image src={getPathFromUrl(blog.image)} alt={blog[`title_${lang}`]} fill={true} />
                             </div>
                             <h1 className="title">{blog[`title_${lang}`]}</h1>
                             <p>{blog[`first_paragraph_${lang}`]}</p>

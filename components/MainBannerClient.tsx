@@ -23,7 +23,7 @@ export default function MainBannerClient ({ banner }: { banner: MainBannerDTo}) 
                 position: 'relative',
             }}
         >
-            <Image src={banner.image} alt={'banner'} fill={true}/>
+            <Image src={process.env.HostName + banner.image} alt={'banner'} fill={true}/>
         </div>
     );
 };

@@ -10,7 +10,7 @@ const Partners = async ({props, lang}: {props: PartnerBanner[], lang: "ru" | "en
                 <div className="block">
                     {props.map((partner, index) => (
                         <div className="column" key={index}>
-                            <Image src={partner.image} alt={partner.name} fill={true}/>
+                            <Image src={process.env.HostName + partner.image} alt={partner.name} fill={true}/>
                         </div>
                     ))}
                 </div>

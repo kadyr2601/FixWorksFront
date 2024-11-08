@@ -22,6 +22,11 @@ const  ReviewComponent: React.FC<ReviewComponentProps> = ({ reviews, lang }) => 
 
     if (!reviews || !reviews.results) return <div>No results found.</div>;
 
+    function getPathFromUrl(url: string) {
+        const urlObj = new URL(url);
+        return process.env.HostName + urlObj.pathname;
+    }
+
     return (
         <div>
             <div className="reviews container">
@@ -32,7 +37,7 @@ const  ReviewComponent: React.FC<ReviewComponentProps> = ({ reviews, lang }) => 
                         </span>
                         <div className={'review-content'}>
                             <div className={'image'}>
-                                <Image src={r.image} alt={r.fullname} fill={true} />
+                                <Image src={getPathFromUrl(r.image)} alt={r.fullname} fill={true} />
                             </div>
                             <div className={'text'}>
                                 <div>{r.fullname}</div>
