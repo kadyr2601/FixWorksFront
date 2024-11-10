@@ -23,17 +23,13 @@ async function getPortfolioList(page: number = 1) {
     return res.json();
 }
 
-interface PageProps {
-    params: { lang: "ru" | "en" };
-    searchParams: { page?: string };
-}
+interface PageProps {params: { lang: "ru" | "en" }; searchParams: { page?: string };}
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const res = await fetch(`${process.env.API_URL}/service/seo/blog`, {cache: "no-cache"});
     const seoData: SEOSettings = await res.json();
     return {title: seoData[`title_${params.lang}`], description: seoData[`description_${params.lang}`]}
 }
-
 
 export default async function Page({ params: { lang }, searchParams }: PageProps) {
     const currentPage = Number(searchParams.page) || 1;

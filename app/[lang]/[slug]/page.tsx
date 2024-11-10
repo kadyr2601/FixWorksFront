@@ -2,9 +2,20 @@ import {Restoration, MainBannerDTo} from "@/components/DTOs";
 import React from "react";
 import MainBannerClient from "@/components/MainBannerClient";
 import Image from "next/image";
-import { FaPlus, FaMinus } from "react-icons/fa";
+import FAQ from "@/components/FAQ";
+import Arrow from "@/public/arrow-round.svg";
+import FeedbackButton from "@/components/layout/FeedbackButton";
+import RestorationServices from "@/components/RestorationServices";
 import Link from "next/link";
+import {GoArrowLeft} from "react-icons/go";
+import {Metadata} from "next";
 
+
+export async function generateMetadata({ params }: { params: { slug: string, lang: "ru" | "en" } }): Promise<Metadata> {
+    const res = await fetch(`${process.env.API_URL}/restoration_page/retrieve/${params.slug}`, { cache: 'no-store' });
+    const seoData: Restoration = await res.json();
+    return {title: seoData[`title_${params.lang}`], description: seoData[`seo_description_${params.lang}`]}
+}
 
 async function RestorationRetrieve(slug:string) {
     const res = await fetch(`${process.env.API_URL}/restoration_page/retrieve/${slug}`, {cache: "no-cache"});
@@ -25,47 +36,55 @@ export default async function Page({ params }: { params: { slug: string, lang: "
         mobile_height:restoration.mobile_height
     }
 
+    const BackButton = () => <Link href={`/${params.lang}`} replace><GoArrowLeft className={'back-icon'}/>
+        {params.lang == "ru" ? "На главную страницу" : "Go to main page"}
+    </Link>;
+
     return (
         <div className="restoration">
-            <div className="update-notice">
-                <h3>Еще чуть-чуть!</h3>
-                <p>Наши разработчики 🦸‍♂️ 🦸‍♂️ сейчас работают в режиме "кофе + клавиатура". Скоро здесь будет нечто крутое – не
-                    нервничайте, а лучше держите палец на F5!</p>
-                <Link href={'/'} className="back">Выйти</Link>
+            <MainBannerClient banner={banner}/>
+            <div className="section-a">
+                <div className="container">
+                    <div className="left">
+                        <BackButton/>
+                        <h1>{restoration[`name_${params.lang}`]}</h1>
+                        <FeedbackButton lang={params.lang}/>
+                    </div>
+                    <div className="right">
+                        <h3>{restoration[`title_${params.lang}`]}</h3>
+                        <p>{restoration[`description_${params.lang}`]}</p>
+                    </div>
+                </div>
             </div>
-            {/*<MainBannerClient banner={banner}/>*/}
-            {/*<div className="section-a"></div>*/}
 
-            {/*<div className="section-b container">*/}
-            {/*    <div className="images">*/}
-            {/*        <div className="image">*/}
-            {/*            <Image src={restoration.image_before} alt={'before'} fill={true}/>*/}
-            {/*        </div>*/}
+            <div className="section-b container">
+                <div className="left">
+                    <div className="image">
+                        <Image src={`${process.env.HostName}${restoration.image_before}`} alt="before" fill={true}/>
+                    </div>
+                    <div className="arrow-cont">
+                        <div className="arrow">
+                            <Image src={Arrow} alt="arrow" fill={true}/>
+                        </div>
+                    </div>
+                    <FeedbackButton lang={params.lang}/>
+                </div>
+                <div className="right">
+                    <h3 className="result-title">{restoration[`image_title_${params.lang}`]}</h3>
 
-            {/*        <div className="image">*/}
-            {/*            <Image src={restoration.image_after} alt={'after'} fill={true}/>*/}
-            {/*        </div>*/}
+                    <div className="image">
+                        <Image src={`${process.env.HostName}${restoration.image_after}`} alt="after" fill={true}/>
+                    </div>
+                </div>
+            </div>
 
-            {/*        <h3>{restoration[`image_title_${params.lang}`]}</h3>*/}
-            {/*    </div>*/}
-            {/*</div>*/}
+            <RestorationServices services={restoration} lang={params.lang} />
 
-            {/*<div className="faq-section container">*/}
-            {/*    <h2>{params.lang == "en" ? "faq" : "Часто задаваемые вопросы" }</h2>*/}
 
-            {/*    <div className="faq-cont">*/}
-            {/*        {restoration.faqs.map((faq, i) => (*/}
-            {/*            <div key={i} className="faq">*/}
-            {/*                <div className="title">*/}
-            {/*                    <h4>{faq[`question_${params.lang}`]}</h4>*/}
-            {/*                    <FaPlus className={'iconPlus'}/>*/}
-            {/*                    <FaMinus className={'iconMinus'}/>*/}
-            {/*                </div>*/}
-            {/*                <p className={'answer'}>{faq[`answer_${params.lang}`]}</p>*/}
-            {/*            </div>*/}
-            {/*        ))}*/}
-            {/*    </div>*/}
-            {/*</div>*/}
+            <div className="faq-section container">
+                <h2>{params.lang == "en" ? "faq" : "Часто задаваемые вопросы"}</h2>
+                <FAQ restoration={restoration} params={params}/>
+            </div>
         </div>
     )
 }

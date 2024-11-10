@@ -50,13 +50,15 @@ interface FAQ {
     answer_en: string;
 }
 
-interface RestorationService {
+export interface RestorationService {
     id: number;
     title_ru: string;
     title_en: string;
     description_ru: string;
     description_en: string;
+    [key: string]: any;
 }
+
 export interface Restoration {
     id: number;
     banner_image: string;

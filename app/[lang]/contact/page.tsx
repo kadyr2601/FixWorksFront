@@ -23,7 +23,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return {title: seoData[`title_${params.lang}`], description: seoData[`description_${params.lang}`]}
 }
 
-
 export default async function Page({ params: { lang } }: PageProps) {
 
     const page_data: ContactsPageDTO | null = await getContactsPage();

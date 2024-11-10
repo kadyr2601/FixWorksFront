@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { GoArrowLeft } from "react-icons/go";
 import {Metadata} from "next";
-import {SEOSettings} from "@/components/DTOs";
 
 async function getBlog(slug: string) {
     const res = await fetch(`${process.env.API_URL}/blogs_page/retrieve/${slug}`, { cache: 'no-store' });
