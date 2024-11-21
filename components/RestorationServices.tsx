@@ -1,5 +1,5 @@
 'use client'
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import Image from "next/image";
 import {RestorationService} from "@/components/DTOs";
 import Slider from "react-slick";
@@ -28,28 +28,33 @@ const NextArrow = (props: any) => {
 };
 
 const RestorationServices = ({services, lang}: {services: Params, lang: "ru" | "en"}) => {
-    const [isMobile, setIsMobile] = useState(false);
-
-    useEffect(() => {
-        const checkScreenWidth = () => {
-            const width = window.innerWidth;
-            setIsMobile(width < 768);
-        };
-        checkScreenWidth();
-        window.addEventListener('resize', checkScreenWidth);
-        return () => window.removeEventListener('resize', checkScreenWidth);
-    }, []);
 
     const settings = {
         dots: false,
         infinite: true,
-        slidesToShow: isMobile ? 1 : 4,
-        slidesToScroll: isMobile? 1: 1,
+        slidesToShow: 4,
+        slidesToScroll: 1,
         autoplay: false,
         speed: 1000,
         autoplaySpeed: 1000,
         nextArrow: <NextArrow />,
         prevArrow: <PrevArrow />,
+        responsive: [
+            {
+                breakpoint: 1500, // Screen width <= 1400px
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                },
+            },
+            {
+                breakpoint: 768, // Screen width <= 768px
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                },
+            },
+        ],
 
     };
 

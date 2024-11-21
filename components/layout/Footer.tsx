@@ -40,9 +40,9 @@ const Footer = async ({lang}:{lang: 'en' | 'ru'}) => {
                 </div>
                 <div className="column">
                     <h1>{lang == "ru" ? "В соцсетях" : "Follow us"}</h1>
-                    <Link href={'https://www.instagram.com/fix.works/'} target="_blank" rel="noopener noreferrer">Instagram</Link>
-                    <Link href={'https://vt.tiktok.com/ZSdPmaq2G/'} target="_blank" rel="noopener noreferrer">Tiktok</Link>
-                    <Link href={'https://vk.com/fixworks'} target="_blank" rel="noopener noreferrer">VK</Link>
+                    <Link href={'https://www.instagram.com/fixworks_uae/'} target="_blank" rel="noopener noreferrer">Instagram</Link>
+                    <Link href={'https://www.tiktok.com/@fixworks_world?_t=8rWPbLYGjRJ&_r=1'} target="_blank" rel="noopener noreferrer">Tiktok</Link>
+                    {/*<Link href={'https://vk.com/fixworks'} target="_blank" rel="noopener noreferrer">VK</Link>*/}
                 </div>
                 <div className="column">
                     <ScrollToTopButton/>

@@ -116,7 +116,7 @@ const Header = ({lang}:{lang: Lang}) => {
                         ))}
                         {contacts && contacts.emails.map((email, index) => (
                             <div className="row" key={index}>
-                                <Link href={`mailto:${email.email}`}>{email.email}</Link>
+                                <Link href={`mailto:${email.email}`} style={{textTransform: "none"}}>{email.email}</Link>
                                 <p>{email[`description_${lang}`]}</p>
                             </div>
                         ))}
